@@ -48,6 +48,7 @@ if $ENABLE_UFW; then
   ufw default deny incoming
   ufw default allow outgoing
   ufw allow 41641/udp comment 'Tailscale'
+  ufw allow in on tailscale0 comment 'Allow all Tailscale traffic'
   ufw --force enable
   echo "UFW configured (deny all except Tailscale)."
 else
@@ -72,20 +73,13 @@ echo "IP forwarding enabled."
 
 echo "[4/4] Starting Tailscale..."
 UP_ARGS="--authkey=${AUTH_KEY}"
-if [[ -n "$TAGS" ]]; then
-  UP_ARGS+=" --advertise-tags=${TAGS}"
-fi
+[[ -n "$TAGS" ]] && UP_ARGS+=" --advertise-tags=${TAGS}"
+$ENABLE_SSH && UP_ARGS+=" --ssh" || true
+$ENABLE_EXIT_NODE && UP_ARGS+=" --advertise-exit-node" || true
+echo "Running: tailscale up $UP_ARGS"
 tailscale up $UP_ARGS
-
-if $ENABLE_SSH; then
-  tailscale set --ssh
-  echo "Tailscale SSH enabled."
-fi
-
-if $ENABLE_EXIT_NODE; then
-  tailscale set --advertise-exit-node
-  echo "Tailscale exit node enabled."
-fi
+$ENABLE_SSH && echo "Tailscale SSH enabled." || true
+$ENABLE_EXIT_NODE && echo "Tailscale exit node enabled." || true
 
 echo ""
 echo "=== Tailscale Setup Complete ==="
