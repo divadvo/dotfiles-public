@@ -6,6 +6,11 @@ set -euo pipefail
 
 BASE_URL="https://raw.githubusercontent.com/divadvo/dotfiles-public/main/ubuntu"
 
+# --- Wait for cloud-init to finish (if still running) ---
+
+curl -fsSL "$BASE_URL/monitor-cloud-init.sh" | bash
+echo ""
+
 # --- Ensure gum is installed ---
 
 if ! command -v gum &> /dev/null; then
