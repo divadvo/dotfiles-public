@@ -6,56 +6,62 @@
 curl -fsSL https://raw.githubusercontent.com/divadvo/dotfiles-public/main/ubuntu/setup.sh | bash
 ```
 
-## Remote Desktop (xRDP + XFCE)
+## Manual Scripts
 
-```bash
-curl -fsSL https://raw.githubusercontent.com/divadvo/dotfiles-public/main/ubuntu/setup-remote-desktop.sh | bash
-```
-
-## System Packages
-
-```bash
-curl -fsSL https://raw.githubusercontent.com/divadvo/dotfiles-public/main/ubuntu/setup-packages.sh | sudo bash
-```
-
-## Tailscale + UFW
-
-```bash
-curl -fsSL https://raw.githubusercontent.com/divadvo/dotfiles-public/main/ubuntu/setup-tailscale.sh | sudo bash -s -- --auth-key=YOUR_KEY --ufw --ssh --exit-node
-```
-
-## Docker
-
-```bash
-curl -fsSL https://raw.githubusercontent.com/divadvo/dotfiles-public/main/ubuntu/setup-docker.sh | sudo bash -s -- USERNAME
-```
-
-## Gum (CLI toolkit)
+### Gum (CLI toolkit)
 
 ```bash
 curl -fsSL https://raw.githubusercontent.com/divadvo/dotfiles-public/main/ubuntu/setup-gum.sh | bash
 ```
 
-## Google Chrome
-
-```bash
-curl -fsSL https://raw.githubusercontent.com/divadvo/dotfiles-public/main/ubuntu/setup-chrome.sh | sudo bash
-```
-
-## Zsh + Oh My Zsh + Powerlevel10k
+### Zsh + Oh My Zsh + Powerlevel10k
 
 ```bash
 curl -fsSL https://raw.githubusercontent.com/divadvo/dotfiles-public/main/ubuntu/setup-zsh.sh | bash
 ```
 
-## GitHub Repos
+### GitHub Repos
 
 ```bash
 curl -fsSL https://raw.githubusercontent.com/divadvo/dotfiles-public/main/ubuntu/setup-repos.sh | bash
 ```
 
-## Dev Tools (uv, mise, node, bun)
+### Google Chrome
 
 ```bash
-curl -fsSL https://raw.githubusercontent.com/divadvo/dotfiles-public/main/ubuntu/setup-dev-tools.sh | bash
+curl -fsSL https://raw.githubusercontent.com/divadvo/dotfiles-public/main/ubuntu/setup-chrome.sh | sudo bash
+```
+
+### Remote Desktop (xRDP + XFCE)
+
+```bash
+curl -fsSL https://raw.githubusercontent.com/divadvo/dotfiles-public/main/ubuntu/setup-remote-desktop.sh | bash
+```
+
+## Cloud-init Scripts (automatic)
+
+These run automatically during server provisioning via `cloud-init.yml.tftpl`.
+
+### Tailscale + UFW
+
+```bash
+curl -fsSL https://raw.githubusercontent.com/divadvo/dotfiles-public/main/ubuntu/cloud-init/setup-tailscale.sh | sudo bash -s -- --auth-key=YOUR_KEY --ufw --ssh --exit-node
+```
+
+### System Packages
+
+```bash
+curl -fsSL https://raw.githubusercontent.com/divadvo/dotfiles-public/main/ubuntu/cloud-init/setup-packages.sh | sudo bash
+```
+
+### Docker
+
+```bash
+curl -fsSL https://raw.githubusercontent.com/divadvo/dotfiles-public/main/ubuntu/cloud-init/setup-docker.sh | sudo bash -s -- USERNAME
+```
+
+### Dev Tools (uv, mise, node, bun)
+
+```bash
+curl -fsSL https://raw.githubusercontent.com/divadvo/dotfiles-public/main/ubuntu/cloud-init/setup-dev-tools.sh | bash
 ```
