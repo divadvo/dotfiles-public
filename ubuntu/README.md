@@ -30,6 +30,12 @@ curl -fsSL https://raw.githubusercontent.com/divadvo/dotfiles-public/main/ubuntu
 curl -fsSL https://raw.githubusercontent.com/divadvo/dotfiles-public/main/ubuntu/setup-docker.sh | sudo bash -s -- USERNAME
 ```
 
+## Gum (CLI toolkit)
+
+```bash
+curl -fsSL https://raw.githubusercontent.com/divadvo/dotfiles-public/main/ubuntu/setup-gum.sh | bash
+```
+
 ## Google Chrome
 
 ```bash
