@@ -20,9 +20,15 @@ show_summary() {
   styled 76 "Cloud-init complete!"
   echo ""
 
-  # Duration
+  # Server info
   UPTIME=$(awk '{printf "%dm %ds", $1/60, $1%60}' /proc/uptime)
-  echo "Server uptime: $UPTIME"
+  echo "Server:"
+  echo "  Hostname:  $(hostname -f 2>/dev/null || hostname)"
+  echo "  OS:        $(. /etc/os-release 2>/dev/null && echo "$PRETTY_NAME" || echo "unknown")"
+  echo "  Public IP: $(curl -4s --max-time 3 https://ifconfig.me 2>/dev/null || echo "unavailable")"
+  echo "  Created:   $(sudo tune2fs -l "$(findmnt -n -o SOURCE /)" 2>/dev/null | awk -F':[[:space:]]+' '/Filesystem created/{print $2}' || echo "unknown")"
+  echo "  Booted:    $(uptime -s 2>/dev/null || echo "unknown")"
+  echo "  Uptime:    $UPTIME"
   echo ""
 
   # Status
@@ -37,9 +43,45 @@ show_summary() {
   command -v node &>/dev/null && echo "  node $(node --version 2>/dev/null)" || echo "  node: not found"
   command -v uv &>/dev/null && echo "  uv $(uv --version 2>/dev/null)" || echo "  uv: not found"
   command -v gh &>/dev/null && echo "  $(gh --version 2>/dev/null | head -1)" || echo "  gh: not found"
+  echo ""
+
+  # System health
+  echo "Health:"
+  echo "  Disk:    $(df -h / 2>/dev/null | awk 'NR==2{print $3 "/" $2 " (" $5 " used)"}')"
+  echo "  Memory:  $(free -h 2>/dev/null | awk '/Mem:/{print $3 "/" $2 " used"}')"
+  echo "  Load:    $(awk '{print $1 " " $2 " " $3}' /proc/loadavg 2>/dev/null || echo "unknown")"
+  echo ""
+
+  # Networking
+  echo "Network:"
+  if command -v tailscale &>/dev/null && tailscale status &>/dev/null; then
+    echo "  Tailscale IP: $(tailscale ip -4 2>/dev/null || echo "unavailable")"
+    echo "  Tailscale:    $(tailscale status --peers=false 2>/dev/null | head -1 || echo "unknown")"
+  else
+    echo "  Tailscale: not running"
+  fi
+  if command -v ufw &>/dev/null; then
+    echo "  Firewall:  $(sudo ufw status 2>/dev/null | head -1)"
+  fi
+  echo ""
+
+  # Pending updates
+  echo "Updates:"
+  UPGRADABLE=$(apt list --upgradable 2>/dev/null | grep -c upgradable || true)
+  UPGRADABLE="${UPGRADABLE:-0}"
+  if [[ "$UPGRADABLE" -gt 0 ]]; then
+    echo "  $UPGRADABLE package(s) upgradable"
+  else
+    echo "  System is up to date"
+  fi
+  if [[ -f /var/run/reboot-required ]]; then
+    echo "  REBOOT REQUIRED"
+  else
+    echo "  No reboot needed"
+  fi
+  echo ""
 
   # Errors
-  echo ""
   ERRORS=$(sudo grep -ciE "error|fatal|traceback" "$LOG" 2>/dev/null || true)
   ERRORS="${ERRORS:-0}"
   if [[ "$ERRORS" -gt 0 ]]; then
