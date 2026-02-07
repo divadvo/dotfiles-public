@@ -23,6 +23,7 @@ echo ""
 
 # Map display names to script files
 declare -A SCRIPT_MAP
+SCRIPT_MAP["Gum (CLI toolkit)"]="setup-gum.sh"
 SCRIPT_MAP["Zsh + Oh My Zsh + Powerlevel10k"]="setup-zsh.sh"
 SCRIPT_MAP["GitHub Repos (gh auth + clone)"]="setup-repos.sh"
 SCRIPT_MAP["Google Chrome"]="setup-chrome.sh"
@@ -31,7 +32,8 @@ SCRIPT_MAP["Remote Desktop (xRDP + XFCE)"]="setup-remote-desktop.sh"
 # Scripts that require interactive input (no spinner)
 INTERACTIVE_SCRIPTS=("setup-repos.sh" "setup-remote-desktop.sh")
 
-CHOICES=$(gum choose --no-limit --height 8 \
+CHOICES=$(gum choose --no-limit --height 9 --selected="Gum (CLI toolkit),Zsh + Oh My Zsh + Powerlevel10k,GitHub Repos (gh auth + clone),Google Chrome,Remote Desktop (xRDP + XFCE)" \
+  "Gum (CLI toolkit)" \
   "Zsh + Oh My Zsh + Powerlevel10k" \
   "GitHub Repos (gh auth + clone)" \
   "Google Chrome" \
