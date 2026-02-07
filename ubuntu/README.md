@@ -30,6 +30,12 @@ curl -fsSL https://raw.githubusercontent.com/divadvo/dotfiles-public/main/ubuntu
 curl -fsSL https://raw.githubusercontent.com/divadvo/dotfiles-public/main/ubuntu/setup-chrome.sh | sudo bash
 ```
 
+## Zsh + Oh My Zsh + Powerlevel10k
+
+```bash
+curl -fsSL https://raw.githubusercontent.com/divadvo/dotfiles-public/main/ubuntu/setup-zsh.sh | bash
+```
+
 ## Dev Tools (uv, mise, node, bun)
 
 ```bash
