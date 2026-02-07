@@ -6,6 +6,12 @@
 curl -fsSL https://raw.githubusercontent.com/divadvo/dotfiles-public/main/ubuntu/setup-all.sh | bash
 ```
 
+## Monitor Cloud-init
+
+```bash
+curl -fsSL https://raw.githubusercontent.com/divadvo/dotfiles-public/main/ubuntu/monitor-cloud-init.sh | bash
+```
+
 ## Manual Scripts
 
 ### Gum (CLI toolkit)
