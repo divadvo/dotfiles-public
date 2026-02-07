@@ -8,6 +8,12 @@ set -euo pipefail
 echo "=== Remote Desktop Setup (xRDP + XFCE) ==="
 echo ""
 
+# --- Source shared lib ---
+
+_LIB="/tmp/.ubuntu-setup-lib.sh"
+[[ -f "$_LIB" ]] || curl -fsSL https://raw.githubusercontent.com/divadvo/dotfiles-public/main/ubuntu/lib.sh -o "$_LIB"
+source "$_LIB"
+
 # --- Pre-flight checks ---
 
 if [[ $EUID -eq 0 ]]; then
@@ -34,7 +40,7 @@ fi
 # --- Install XFCE ---
 
 echo "[2/6] Installing XFCE desktop environment..."
-sudo DEBIAN_FRONTEND=noninteractive apt-get update -qq
+apt_update_if_stale
 sudo DEBIAN_FRONTEND=noninteractive apt-get install -y -qq xfce4 xfce4-goodies dbus-x11 > /dev/null
 echo "XFCE installed."
 

@@ -11,16 +11,22 @@ if [[ $EUID -eq 0 ]]; then
   exit 1
 fi
 
+# --- Source shared lib ---
+
+_LIB="/tmp/.ubuntu-setup-lib.sh"
+[[ -f "$_LIB" ]] || curl -fsSL https://raw.githubusercontent.com/divadvo/dotfiles-public/main/ubuntu/lib.sh -o "$_LIB"
+source "$_LIB"
+
 # --- Install zsh, fzf, zoxide ---
 
-echo "[1/6] Installing zsh, fzf, zoxide..."
-sudo DEBIAN_FRONTEND=noninteractive apt-get update -qq
+echo "[1/5] Installing zsh, fzf, zoxide..."
+apt_update_if_stale
 sudo DEBIAN_FRONTEND=noninteractive apt-get install -y -qq zsh fzf zoxide > /dev/null
 echo "Packages installed."
 
 # --- Oh My Zsh ---
 
-echo "[2/6] Installing Oh My Zsh..."
+echo "[2/5] Installing Oh My Zsh..."
 if [[ -d ~/.oh-my-zsh ]]; then
   echo "Already installed, skipping."
 else
@@ -28,43 +34,28 @@ else
   echo "Oh My Zsh installed."
 fi
 
-# --- Powerlevel10k ---
+# --- Powerlevel10k + plugins (parallel) ---
 
-echo "[3/6] Installing Powerlevel10k theme..."
-if [[ -d ~/.oh-my-zsh/custom/themes/powerlevel10k ]]; then
-  echo "Already installed, skipping."
-else
-  git clone --depth=1 https://github.com/romkatv/powerlevel10k.git ~/.oh-my-zsh/custom/themes/powerlevel10k
-  echo "Powerlevel10k installed."
-fi
+echo "[3/5] Installing Powerlevel10k theme + plugins..."
 
-# --- Custom plugins ---
-
-echo "[4/6] Installing custom plugins..."
-
-if [[ -d ~/.oh-my-zsh/custom/plugins/zsh-autosuggestions ]]; then
-  echo "zsh-autosuggestions already installed."
-else
-  git clone --depth=1 https://github.com/zsh-users/zsh-autosuggestions.git ~/.oh-my-zsh/custom/plugins/zsh-autosuggestions
-  echo "zsh-autosuggestions installed."
-fi
-
-if [[ -d ~/.oh-my-zsh/custom/plugins/zsh-you-should-use ]]; then
-  echo "zsh-you-should-use already installed."
-else
-  git clone --depth=1 https://github.com/MichaelAquilina/zsh-you-should-use.git ~/.oh-my-zsh/custom/plugins/zsh-you-should-use
-  echo "zsh-you-should-use installed."
-fi
+[[ -d ~/.oh-my-zsh/custom/themes/powerlevel10k ]] || \
+  git clone --depth=1 https://github.com/romkatv/powerlevel10k.git ~/.oh-my-zsh/custom/themes/powerlevel10k &
+[[ -d ~/.oh-my-zsh/custom/plugins/zsh-autosuggestions ]] || \
+  git clone --depth=1 https://github.com/zsh-users/zsh-autosuggestions.git ~/.oh-my-zsh/custom/plugins/zsh-autosuggestions &
+[[ -d ~/.oh-my-zsh/custom/plugins/zsh-you-should-use ]] || \
+  git clone --depth=1 https://github.com/MichaelAquilina/zsh-you-should-use.git ~/.oh-my-zsh/custom/plugins/zsh-you-should-use &
+wait
+echo "Powerlevel10k + plugins installed."
 
 # --- Write .zshrc ---
 
-echo "[5/6] Downloading ~/.zshrc..."
+echo "[4/5] Downloading ~/.zshrc..."
 curl -fsSL https://raw.githubusercontent.com/divadvo/dotfiles-public/main/ubuntu/dotfiles/zshrc -o ~/.zshrc
 echo ".zshrc written."
 
 # --- Change default shell ---
 
-echo "[6/6] Setting zsh as default shell..."
+echo "[5/5] Setting zsh as default shell..."
 if [[ "$(basename "$SHELL")" == "zsh" ]]; then
   echo "Already using zsh."
 else

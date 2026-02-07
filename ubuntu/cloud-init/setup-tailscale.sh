@@ -7,6 +7,12 @@ set -euo pipefail
 
 echo "=== Tailscale Setup ==="
 
+# --- Source shared lib ---
+
+_LIB="/tmp/.ubuntu-setup-lib.sh"
+[[ -f "$_LIB" ]] || curl -fsSL https://raw.githubusercontent.com/divadvo/dotfiles-public/main/ubuntu/lib.sh -o "$_LIB"
+source "$_LIB"
+
 # --- Parse arguments ---
 
 AUTH_KEY=""
@@ -37,7 +43,7 @@ fi
 
 if $ENABLE_UFW; then
   echo "[1/4] Configuring UFW firewall..."
-  DEBIAN_FRONTEND=noninteractive apt-get update -qq
+  apt_update_if_stale
   DEBIAN_FRONTEND=noninteractive apt-get install -y -qq ufw > /dev/null
   ufw default deny incoming
   ufw default allow outgoing

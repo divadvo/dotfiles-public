@@ -16,8 +16,7 @@ fi
 echo "[1/3] Installing uv + Python..."
 curl -LsSf https://astral.sh/uv/install.sh | sh
 ~/.local/bin/uv python install 3.13 3.14
-~/.local/bin/uv tool install build
-~/.local/bin/uv tool install ruff
+# ~/.local/bin/uv tool install build ruff
 echo "uv installed."
 
 # --- mise ---

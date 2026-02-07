@@ -6,6 +6,12 @@ set -euo pipefail
 
 echo "=== System Packages Setup ==="
 
+# --- Source shared lib ---
+
+_LIB="/tmp/.ubuntu-setup-lib.sh"
+[[ -f "$_LIB" ]] || curl -fsSL https://raw.githubusercontent.com/divadvo/dotfiles-public/main/ubuntu/lib.sh -o "$_LIB"
+source "$_LIB"
+
 # --- GitHub CLI repo ---
 
 echo "[1/2] Adding GitHub CLI repository..."
@@ -16,7 +22,7 @@ echo "GitHub CLI repo added."
 # --- Install packages ---
 
 echo "[2/2] Installing packages..."
-DEBIAN_FRONTEND=noninteractive apt-get update -qq
+apt_update_if_stale
 DEBIAN_FRONTEND=noninteractive apt-get install -y -qq \
   git git-lfs neovim build-essential wget curl \
   fd-find ripgrep rsync tree htop bat lsd \
