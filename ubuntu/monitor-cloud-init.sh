@@ -106,11 +106,14 @@ fi
 styled 212 "Monitoring cloud-init"
 echo ""
 echo "Status: $STATUS"
-echo "Tailing $LOG (Ctrl+C to stop watching)..."
 echo ""
 
-# Tail log in background
-sudo tail -f "$LOG" &
+# Show existing log content, then follow new output
+sudo cat "$LOG" 2>/dev/null
+echo ""
+echo "--- live tail ---"
+echo ""
+sudo tail -n 0 -f "$LOG" &
 TAIL_PID=$!
 
 # Clean up tail on exit
