@@ -24,6 +24,12 @@ curl -fsSL https://raw.githubusercontent.com/divadvo/dotfiles-public/main/ubuntu
 curl -fsSL https://raw.githubusercontent.com/divadvo/dotfiles-public/main/ubuntu/setup-docker.sh | sudo bash -s -- USERNAME
 ```
 
+## Google Chrome
+
+```bash
+curl -fsSL https://raw.githubusercontent.com/divadvo/dotfiles-public/main/ubuntu/setup-chrome.sh | sudo bash
+```
+
 ## Dev Tools (uv, mise, node, bun)
 
 ```bash
