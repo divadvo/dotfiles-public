@@ -36,6 +36,12 @@ curl -fsSL https://raw.githubusercontent.com/divadvo/dotfiles-public/main/ubuntu
 curl -fsSL https://raw.githubusercontent.com/divadvo/dotfiles-public/main/ubuntu/setup-zsh.sh | bash
 ```
 
+## GitHub Repos
+
+```bash
+curl -fsSL https://raw.githubusercontent.com/divadvo/dotfiles-public/main/ubuntu/setup-repos.sh | bash
+```
+
 ## Dev Tools (uv, mise, node, bun)
 
 ```bash

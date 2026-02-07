@@ -22,7 +22,7 @@ else
 fi
 
 # PATH
-export PATH=~/.local/bin:$PATH
+export PATH=~/pr/github/divadvo-scripts:~/.local/bin:$PATH
 
 # Functions
 function chpwd_ls { ls }
