@@ -24,8 +24,13 @@ echo "[1/4] Checking GitHub authentication..."
 if gh auth status &> /dev/null; then
   echo "Already authenticated."
 else
-  echo "Please authenticate with GitHub:"
-  gh auth login --git-protocol https --web < /dev/tty
+  HOSTNAME=$(hostname)
+  echo "Not authenticated. Run this from your Mac to send your token:"
+  echo ""
+  echo "  gh auth token | ssh divadvo@${HOSTNAME} 'gh auth login --with-token && gh config set -h github.com git_protocol https'"
+  echo ""
+  echo "Then re-run this script."
+  exit 1
 fi
 
 # --- Create directory structure ---

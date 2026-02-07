@@ -22,6 +22,14 @@ curl -fsSL https://raw.githubusercontent.com/divadvo/dotfiles-public/main/ubuntu
 
 ### GitHub Repos
 
+First, send your GitHub auth from your Mac:
+
+```bash
+gh auth token | ssh divadvo@dh1 'gh auth login --with-token && gh config set -h github.com git_protocol https'
+```
+
+Then on the server:
+
 ```bash
 curl -fsSL https://raw.githubusercontent.com/divadvo/dotfiles-public/main/ubuntu/setup-repos.sh | bash
 ```
