@@ -59,7 +59,7 @@ fi
 # --- Write .zshrc ---
 
 echo "[5/6] Downloading ~/.zshrc..."
-curl -fsSL https://raw.githubusercontent.com/divadvo/dotfiles-public/main/ubuntu/zshrc -o ~/.zshrc
+curl -fsSL https://raw.githubusercontent.com/divadvo/dotfiles-public/main/ubuntu/dotfiles/zshrc -o ~/.zshrc
 echo ".zshrc written."
 
 # --- Change default shell ---

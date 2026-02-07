@@ -3,7 +3,7 @@
 ## Interactive Setup (pick & run)
 
 ```bash
-curl -fsSL https://raw.githubusercontent.com/divadvo/dotfiles-public/main/ubuntu/setup.sh | bash
+curl -fsSL https://raw.githubusercontent.com/divadvo/dotfiles-public/main/ubuntu/setup-all.sh | bash
 ```
 
 ## Manual Scripts
