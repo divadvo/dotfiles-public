@@ -26,7 +26,7 @@ show_summary() {
   echo "  Hostname:  $(hostname -f 2>/dev/null || hostname)"
   echo "  OS:        $(. /etc/os-release 2>/dev/null && echo "$PRETTY_NAME" || echo "unknown")"
   echo "  Public IP: $(curl -4s --max-time 3 https://ifconfig.me 2>/dev/null || echo "unavailable")"
-  echo "  Created:   $(sudo tune2fs -l "$(findmnt -n -o SOURCE /)" 2>/dev/null | awk -F':[[:space:]]+' '/Filesystem created/{print $2}' || echo "unknown")"
+  echo "  Created:   $(stat -c '%y' /etc/machine-id 2>/dev/null | cut -d. -f1 || echo "unknown")"
   echo "  Booted:    $(uptime -s 2>/dev/null || echo "unknown")"
   echo "  Uptime:    $UPTIME"
   echo ""
