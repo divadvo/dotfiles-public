@@ -25,7 +25,7 @@ if gh auth status &> /dev/null; then
   echo "Already authenticated."
 else
   echo "Please authenticate with GitHub:"
-  gh auth login < /dev/tty
+  gh auth login --git-protocol https --web < /dev/tty
 fi
 
 # --- Create directory structure ---
