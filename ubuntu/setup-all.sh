@@ -74,3 +74,14 @@ while IFS= read -r choice; do
 done <<< "$CHOICES"
 
 gum style --border rounded --padding "0 2" --foreground 76 --bold "All done!"
+
+# --- Reboot if needed ---
+
+if [[ -f /var/run/reboot-required ]]; then
+  echo ""
+  if gum confirm "Reboot required. Reboot now?" < /dev/tty; then
+    sudo reboot
+  else
+    echo "Run 'sudo reboot' when ready."
+  fi
+fi
