@@ -31,5 +31,11 @@ DEBIAN_FRONTEND=noninteractive apt-get install -y -qq \
   > /dev/null
 echo "Packages installed."
 
+# --- Disable Ubuntu Pro/ESM MOTD messages ---
+
+pro config set apt_news=false 2>/dev/null || true
+chmod -x /etc/update-motd.d/88-esm-announce 2>/dev/null || true
+chmod -x /etc/update-motd.d/91-contract-ua-esm-status 2>/dev/null || true
+
 echo ""
 echo "=== System Packages Setup Complete ==="

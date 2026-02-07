@@ -56,11 +56,10 @@ for repo in "${PRIORITY_REPOS[@]}"; do
   fi
 done
 
-# --- Clone recent repos ---
+# --- Clone recent repos (parallel) ---
 
 echo "[4/4] Cloning recent repos..."
-CLONED=0
-SKIPPED=0
+REPOS_TO_CLONE=()
 
 while IFS= read -r repo; do
   name="${repo#*/}"
@@ -68,22 +67,22 @@ while IFS= read -r repo; do
   # Skip priority repos (already cloned above)
   skip=false
   for p in "${PRIORITY_REPOS[@]}"; do
-    if [[ "$p" == "$repo" ]]; then
-      skip=true
-      break
-    fi
+    [[ "$p" == "$repo" ]] && skip=true && break
   done
-  if $skip; then continue; fi
+  $skip && continue
 
-  if [[ -d ~/pr/github/"$name" ]]; then
-    SKIPPED=$((SKIPPED + 1))
-  else
-    gh repo clone "$repo" ~/pr/github/"$name"
-    CLONED=$((CLONED + 1))
-  fi
+  [[ -d ~/pr/github/"$name" ]] && continue
+  REPOS_TO_CLONE+=("$repo")
 done < <(gh repo list --limit 10 --json nameWithOwner --jq '.[].nameWithOwner')
 
-echo "  Cloned $CLONED, skipped $SKIPPED (already exist)."
+# Clone in parallel
+for repo in "${REPOS_TO_CLONE[@]}"; do
+  name="${repo#*/}"
+  gh repo clone "$repo" ~/pr/github/"$name" &
+done
+wait
+
+echo "  Cloned ${#REPOS_TO_CLONE[@]} repo(s)."
 
 echo ""
 echo "=== Repos Setup Complete ==="
