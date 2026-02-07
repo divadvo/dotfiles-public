@@ -1,5 +1,11 @@
 # Ubuntu Setup Scripts
 
+## Interactive Setup (pick & run)
+
+```bash
+curl -fsSL https://raw.githubusercontent.com/divadvo/dotfiles-public/main/ubuntu/setup.sh | bash
+```
+
 ## Remote Desktop (xRDP + XFCE)
 
 ```bash
