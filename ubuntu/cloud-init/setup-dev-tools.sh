@@ -37,6 +37,7 @@ echo "mise installed."
 # --- npm tools ---
 
 echo "[3/3] Installing npm tools..."
+export PATH="$HOME/.local/bin:$HOME/.local/share/mise/shims:$PATH"
 ~/.local/bin/mise exec -- npm install -g yarn pnpm @anthropic-ai/claude-code
 echo "npm tools installed."
 
