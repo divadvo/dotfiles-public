@@ -3,8 +3,12 @@ set -euo pipefail
 
 # Interactive runner for manual setup scripts (not included in cloud-init)
 # Run as normal user (not root)
+# Usage: bash setup-all.sh [--unattended]
 
 BASE_URL="https://raw.githubusercontent.com/divadvo/dotfiles-public/main/ubuntu"
+
+UNATTENDED=false
+[[ "${1:-}" == "--unattended" ]] && UNATTENDED=true
 
 # --- Wait for cloud-init to finish (if still running) ---
 
@@ -35,18 +39,27 @@ SCRIPT_MAP["Google Chrome"]="setup-chrome.sh"
 SCRIPT_MAP["Remote Desktop (xRDP + XFCE)"]="setup-remote-desktop.sh"
 SCRIPT_MAP["System Update (dist-upgrade)"]="setup-update.sh"
 
-CHOICES=$(gum choose --no-limit --height 10 --selected="Gum (CLI toolkit),Zsh + Oh My Zsh + Powerlevel10k,GitHub Repos (gh auth + clone),Google Chrome,Remote Desktop (xRDP + XFCE),System Update (dist-upgrade)" \
-  "Gum (CLI toolkit)" \
-  "Zsh + Oh My Zsh + Powerlevel10k" \
-  "GitHub Repos (gh auth + clone)" \
-  "Google Chrome" \
-  "Remote Desktop (xRDP + XFCE)" \
-  "System Update (dist-upgrade)" \
-  < /dev/tty)
+if $UNATTENDED; then
+  CHOICES="Gum (CLI toolkit)
+Zsh + Oh My Zsh + Powerlevel10k
+GitHub Repos (gh auth + clone)
+Google Chrome
+Remote Desktop (xRDP + XFCE)
+System Update (dist-upgrade)"
+else
+  CHOICES=$(gum choose --no-limit --height 10 --selected="Gum (CLI toolkit),Zsh + Oh My Zsh + Powerlevel10k,GitHub Repos (gh auth + clone),Google Chrome,Remote Desktop (xRDP + XFCE),System Update (dist-upgrade)" \
+    "Gum (CLI toolkit)" \
+    "Zsh + Oh My Zsh + Powerlevel10k" \
+    "GitHub Repos (gh auth + clone)" \
+    "Google Chrome" \
+    "Remote Desktop (xRDP + XFCE)" \
+    "System Update (dist-upgrade)" \
+    < /dev/tty)
 
-if [[ -z "$CHOICES" ]]; then
-  echo "Nothing selected."
-  exit 0
+  if [[ -z "$CHOICES" ]]; then
+    echo "Nothing selected."
+    exit 0
+  fi
 fi
 
 echo ""
@@ -81,9 +94,14 @@ gum style --border rounded --padding "0 2" --foreground 76 --bold "All done!"
 
 if [[ -f /var/run/reboot-required ]]; then
   echo ""
-  if gum confirm "Reboot required. Reboot now?" < /dev/tty; then
+  if $UNATTENDED; then
+    echo "Rebooting..."
     sudo reboot
   else
-    echo "Run 'sudo reboot' when ready."
+    if gum confirm "Reboot required. Reboot now?" < /dev/tty; then
+      sudo reboot
+    else
+      echo "Run 'sudo reboot' when ready."
+    fi
   fi
 fi

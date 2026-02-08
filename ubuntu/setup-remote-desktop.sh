@@ -30,8 +30,13 @@ fi
 echo "[1/6] Checking password..."
 PASSWD_STATUS=$(sudo passwd -S "$USER" | awk '{print $2}')
 if [[ "$PASSWD_STATUS" == "L" || "$PASSWD_STATUS" == "NP" ]]; then
-  echo "xRDP requires a password for login. Please set one now:"
-  sudo passwd "$USER" < /dev/tty
+  if [[ -n "${RDP_PASSWORD:-}" ]]; then
+    echo "$USER:$RDP_PASSWORD" | sudo chpasswd
+    echo "Password set."
+  else
+    echo "xRDP requires a password for login. Please set one now:"
+    sudo passwd "$USER" < /dev/tty
+  fi
   echo ""
 else
   echo "Password already set."
