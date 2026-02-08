@@ -49,9 +49,10 @@ echo "Powerlevel10k + plugins installed."
 
 # --- Write .zshrc ---
 
-echo "[4/5] Downloading ~/.zshrc..."
+echo "[4/5] Downloading ~/.zshrc and ~/.p10k.zsh..."
 curl -fsSL https://raw.githubusercontent.com/divadvo/dotfiles-public/main/ubuntu/dotfiles/zshrc -o ~/.zshrc
-echo ".zshrc written."
+curl -fsSL https://raw.githubusercontent.com/divadvo/dotfiles-public/main/ubuntu/dotfiles/p10k.zsh -o ~/.p10k.zsh
+echo ".zshrc and .p10k.zsh written."
 
 # --- Change default shell ---
 
@@ -68,4 +69,4 @@ echo "=== Zsh Setup Complete ==="
 echo ""
 echo "Next steps:"
 echo "  1. Run 'exec zsh' or re-login to start zsh"
-echo "  2. Powerlevel10k configuration wizard will launch on first start"
+echo "  2. Powerlevel10k is pre-configured (re-run with: p10k configure)"
