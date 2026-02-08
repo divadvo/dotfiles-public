@@ -33,9 +33,10 @@ echo "Packages installed."
 
 # --- Disable Ubuntu Pro/ESM MOTD messages ---
 
+# Remove all Ubuntu Pro/ESM MOTD spam
 pro config set apt_news=false 2>/dev/null || true
-chmod -x /etc/update-motd.d/88-esm-announce 2>/dev/null || true
-chmod -x /etc/update-motd.d/91-contract-ua-esm-status 2>/dev/null || true
+DEBIAN_FRONTEND=noninteractive apt-get remove -y ubuntu-pro-client 2>/dev/null || true
+sed -i 's/^ENABLED=1/ENABLED=0/' /etc/default/motd-news 2>/dev/null || true
 
 echo ""
 echo "=== System Packages Setup Complete ==="
