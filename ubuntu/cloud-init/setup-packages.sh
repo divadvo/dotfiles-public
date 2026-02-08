@@ -37,6 +37,8 @@ echo "Packages installed."
 pro config set apt_news=false 2>/dev/null || true
 DEBIAN_FRONTEND=noninteractive apt-get remove -y ubuntu-pro-client 2>/dev/null || true
 sed -i 's/^ENABLED=1/ENABLED=0/' /etc/default/motd-news 2>/dev/null || true
+truncate -s 0 /var/lib/update-notifier/updates-available 2>/dev/null || true
+rm -f /run/motd.dynamic 2>/dev/null || true
 
 echo ""
 echo "=== System Packages Setup Complete ==="
