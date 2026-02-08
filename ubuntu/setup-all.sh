@@ -33,13 +33,15 @@ SCRIPT_MAP["Zsh + Oh My Zsh + Powerlevel10k"]="setup-zsh.sh"
 SCRIPT_MAP["GitHub Repos (gh auth + clone)"]="setup-repos.sh"
 SCRIPT_MAP["Google Chrome"]="setup-chrome.sh"
 SCRIPT_MAP["Remote Desktop (xRDP + XFCE)"]="setup-remote-desktop.sh"
+SCRIPT_MAP["System Update (dist-upgrade)"]="setup-update.sh"
 
-CHOICES=$(gum choose --no-limit --height 9 --selected="Gum (CLI toolkit),Zsh + Oh My Zsh + Powerlevel10k,GitHub Repos (gh auth + clone),Google Chrome,Remote Desktop (xRDP + XFCE)" \
+CHOICES=$(gum choose --no-limit --height 10 --selected="Gum (CLI toolkit),Zsh + Oh My Zsh + Powerlevel10k,GitHub Repos (gh auth + clone),Google Chrome,Remote Desktop (xRDP + XFCE),System Update (dist-upgrade)" \
   "Gum (CLI toolkit)" \
   "Zsh + Oh My Zsh + Powerlevel10k" \
   "GitHub Repos (gh auth + clone)" \
   "Google Chrome" \
   "Remote Desktop (xRDP + XFCE)" \
+  "System Update (dist-upgrade)" \
   < /dev/tty)
 
 if [[ -z "$CHOICES" ]]; then
