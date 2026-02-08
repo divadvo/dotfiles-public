@@ -138,6 +138,7 @@ cat > ~/.config/xfce4/xfconf/xfce-perchannel-xml/xfwm4.xml << 'XEOF'
 </channel>
 XEOF
 
+# Set wallpaper — include multiple monitor names to cover xRDP variants
 cat > ~/.config/xfce4/xfconf/xfce-perchannel-xml/xfce4-desktop.xml << 'XEOF'
 <?xml version="1.0" encoding="UTF-8"?>
 <channel name="xfce4-desktop" version="1.0">
@@ -147,13 +148,18 @@ cat > ~/.config/xfce4/xfconf/xfce-perchannel-xml/xfce4-desktop.xml << 'XEOF'
         <property name="workspace0" type="empty">
           <property name="last-image" type="string" value="/usr/share/backgrounds/xfce/xfce-blue.jpg"/>
           <property name="image-style" type="int" value="5"/>
-          <property name="color-style" type="int" value="0"/>
-          <property name="rgba1" type="array">
-            <value type="double" value="0.223529"/>
-            <value type="double" value="0.247059"/>
-            <value type="double" value="0.372549"/>
-            <value type="double" value="1.0"/>
-          </property>
+        </property>
+      </property>
+      <property name="monitor0" type="empty">
+        <property name="workspace0" type="empty">
+          <property name="last-image" type="string" value="/usr/share/backgrounds/xfce/xfce-blue.jpg"/>
+          <property name="image-style" type="int" value="5"/>
+        </property>
+      </property>
+      <property name="monitorVNC-0" type="empty">
+        <property name="workspace0" type="empty">
+          <property name="last-image" type="string" value="/usr/share/backgrounds/xfce/xfce-blue.jpg"/>
+          <property name="image-style" type="int" value="5"/>
         </property>
       </property>
     </property>
