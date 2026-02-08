@@ -101,26 +101,67 @@ echo "Polkit fixes applied."
 
 # --- Install Orchis theme ---
 
-echo "[6/7] Installing Orchis theme..."
+echo "[6/7] Installing Orchis theme + Tela icons..."
 sudo DEBIAN_FRONTEND=noninteractive apt-get install -y -qq gtk2-engines-murrine sassc > /dev/null
+
+# Orchis GTK theme
 ORCHIS_DIR=$(mktemp -d)
 git clone --depth 1 https://github.com/vinceliuice/Orchis-theme.git "$ORCHIS_DIR"
-"$ORCHIS_DIR/install.sh"
+"$ORCHIS_DIR/install.sh" -t default -c light
 rm -rf "$ORCHIS_DIR"
 
-# Apply theme to XFCE
+# Tela icon theme
+TELA_DIR=$(mktemp -d)
+git clone --depth 1 https://github.com/vinceliuice/Tela-icon-theme.git "$TELA_DIR"
+"$TELA_DIR/install.sh"
+rm -rf "$TELA_DIR"
+
+# Apply theme, icons, and wallpaper to XFCE
 mkdir -p ~/.config/xfce4/xfconf/xfce-perchannel-xml
+
 cat > ~/.config/xfce4/xfconf/xfce-perchannel-xml/xsettings.xml << 'XEOF'
 <?xml version="1.0" encoding="UTF-8"?>
 <channel name="xsettings" version="1.0">
   <property name="Net" type="empty">
-    <property name="ThemeName" type="string" value="Orchis"/>
-    <property name="IconThemeName" type="string" value="Adwaita"/>
+    <property name="ThemeName" type="string" value="Orchis-Light"/>
+    <property name="IconThemeName" type="string" value="Tela"/>
   </property>
 </channel>
 XEOF
 
-echo "Orchis theme installed and applied."
+cat > ~/.config/xfce4/xfconf/xfce-perchannel-xml/xfwm4.xml << 'XEOF'
+<?xml version="1.0" encoding="UTF-8"?>
+<channel name="xfwm4" version="1.0">
+  <property name="general" type="empty">
+    <property name="theme" type="string" value="Orchis-Light"/>
+  </property>
+</channel>
+XEOF
+
+cat > ~/.config/xfce4/xfconf/xfce-perchannel-xml/xfce4-desktop.xml << 'XEOF'
+<?xml version="1.0" encoding="UTF-8"?>
+<channel name="xfce4-desktop" version="1.0">
+  <property name="backdrop" type="empty">
+    <property name="screen0" type="empty">
+      <property name="monitorrdp0" type="empty">
+        <property name="workspace0" type="empty">
+          <property name="last-image" type="string" value="/usr/share/backgrounds/xfce/xfce-shapes.svg"/>
+          <property name="image-style" type="int" value="5"/>
+          <property name="color-style" type="int" value="0"/>
+          <property name="rgba1" type="array">
+            <value type="double" value="0.223529"/>
+            <value type="double" value="0.247059"/>
+            <value type="double" value="0.372549"/>
+            <value type="double" value="1.0"/>
+          </property>
+        </property>
+      </property>
+    </property>
+  </property>
+</channel>
+XEOF
+
+echo "Orchis Light theme, Tela icons, and wallpaper applied."
 
 # --- Enable and start xRDP ---
 
