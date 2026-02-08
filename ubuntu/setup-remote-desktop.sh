@@ -145,7 +145,7 @@ cat > ~/.config/xfce4/xfconf/xfce-perchannel-xml/xfce4-desktop.xml << 'XEOF'
     <property name="screen0" type="empty">
       <property name="monitorrdp0" type="empty">
         <property name="workspace0" type="empty">
-          <property name="last-image" type="string" value="/usr/share/backgrounds/xfce/xfce-shapes.svg"/>
+          <property name="last-image" type="string" value="/usr/share/backgrounds/xfce/xfce-blue.jpg"/>
           <property name="image-style" type="int" value="5"/>
           <property name="color-style" type="int" value="0"/>
           <property name="rgba1" type="array">
