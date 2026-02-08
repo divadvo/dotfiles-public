@@ -39,21 +39,21 @@ fi
 
 # --- Install XFCE ---
 
-echo "[2/6] Installing XFCE desktop environment..."
+echo "[2/7] Installing XFCE desktop environment..."
 apt_update_if_stale
 sudo DEBIAN_FRONTEND=noninteractive apt-get install -y -qq xfce4 xfce4-goodies dbus-x11 > /dev/null
 echo "XFCE installed."
 
 # --- Install xRDP ---
 
-echo "[3/6] Installing xRDP..."
+echo "[3/7] Installing xRDP..."
 sudo DEBIAN_FRONTEND=noninteractive apt-get install -y -qq xrdp > /dev/null
 sudo adduser xrdp ssl-cert 2>/dev/null || true
 echo "xRDP installed."
 
 # --- Configure xRDP to use XFCE ---
 
-echo "[4/6] Configuring xRDP session..."
+echo "[4/7] Configuring xRDP session..."
 
 # Per-user session config
 echo "startxfce4" > ~/.xsession
@@ -68,7 +68,7 @@ echo "Session configured."
 
 # --- Fix Ubuntu 24.04 polkit popups ---
 
-echo "[5/6] Applying polkit fixes..."
+echo "[5/7] Applying polkit fixes..."
 
 # Install polkitd-pkla (Ubuntu 24.04 uses JS rules by default, pkla is simpler for these overrides)
 sudo DEBIAN_FRONTEND=noninteractive apt-get install -y -qq polkitd-pkla 2>/dev/null || true
@@ -99,7 +99,32 @@ echo "Polkit fixes applied."
 
 # --- Enable and start xRDP ---
 
-echo "[6/6] Starting xRDP service..."
+# --- Install Orchis theme ---
+
+echo "[6/7] Installing Orchis theme..."
+sudo DEBIAN_FRONTEND=noninteractive apt-get install -y -qq gtk2-engines-murrine sassc > /dev/null
+ORCHIS_DIR=$(mktemp -d)
+git clone --depth 1 https://github.com/vinceliuice/Orchis-theme.git "$ORCHIS_DIR"
+"$ORCHIS_DIR/install.sh"
+rm -rf "$ORCHIS_DIR"
+
+# Apply theme to XFCE
+mkdir -p ~/.config/xfce4/xfconf/xfce-perchannel-xml
+cat > ~/.config/xfce4/xfconf/xfce-perchannel-xml/xsettings.xml << 'XEOF'
+<?xml version="1.0" encoding="UTF-8"?>
+<channel name="xsettings" version="1.0">
+  <property name="Net" type="empty">
+    <property name="ThemeName" type="string" value="Orchis"/>
+    <property name="IconThemeName" type="string" value="Adwaita"/>
+  </property>
+</channel>
+XEOF
+
+echo "Orchis theme installed and applied."
+
+# --- Enable and start xRDP ---
+
+echo "[7/7] Starting xRDP service..."
 sudo systemctl enable xrdp --now
 sudo systemctl restart xrdp
 echo "xRDP is running."
