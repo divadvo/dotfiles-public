@@ -40,12 +40,16 @@ SCRIPT_MAP["Remote Desktop (xRDP + XFCE)"]="setup-remote-desktop.sh"
 SCRIPT_MAP["System Update (dist-upgrade)"]="setup-update.sh"
 
 if $UNATTENDED; then
-  CHOICES="Gum (CLI toolkit)
+  if [[ -n "${SETUP_CHOICES:-}" ]]; then
+    CHOICES="$SETUP_CHOICES"
+  else
+    CHOICES="Gum (CLI toolkit)
 Zsh + Oh My Zsh + Powerlevel10k
 GitHub Repos (gh auth + clone)
 Google Chrome
 Remote Desktop (xRDP + XFCE)
 System Update (dist-upgrade)"
+  fi
 else
   CHOICES=$(gum choose --no-limit --height 10 --selected="Gum (CLI toolkit),Zsh + Oh My Zsh + Powerlevel10k,GitHub Repos (gh auth + clone),Google Chrome,Remote Desktop (xRDP + XFCE),System Update (dist-upgrade)" \
     "Gum (CLI toolkit)" \
