@@ -52,6 +52,15 @@ curl -fsSL https://raw.githubusercontent.com/divadvo/dotfiles-public/main/ubuntu
 curl -fsSL https://raw.githubusercontent.com/divadvo/dotfiles-public/main/ubuntu/setup-remote-desktop.sh | bash
 ```
 
+## Proxmox LXC (Ubuntu 24.04)
+
+As root:
+
+```bash
+curl -fsSL https://raw.githubusercontent.com/divadvo/dotfiles-public/main/ubuntu/cloud-init/setup-packages.sh | bash
+curl -fsSL https://raw.githubusercontent.com/divadvo/dotfiles-public/main/ubuntu/setup-all.sh | bash
+```
+
 ## Cloud-init Scripts (automatic)
 
 These run automatically during server provisioning via `cloud-init.yml.tftpl`.

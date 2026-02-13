@@ -2,7 +2,6 @@
 set -euo pipefail
 
 # Interactive runner for manual setup scripts (not included in cloud-init)
-# Run as normal user (not root)
 # Usage: bash setup-all.sh [--unattended]
 
 BASE_URL="https://raw.githubusercontent.com/divadvo/dotfiles-public/main/ubuntu"
@@ -12,8 +11,10 @@ UNATTENDED=false
 
 # --- Wait for cloud-init to finish (if still running) ---
 
-curl -fsSL "$BASE_URL/monitor-cloud-init.sh" | bash
-echo ""
+if command -v cloud-init &> /dev/null; then
+  curl -fsSL "$BASE_URL/monitor-cloud-init.sh" | bash
+  echo ""
+fi
 
 # --- Ensure gum is installed ---
 
@@ -33,6 +34,7 @@ echo ""
 # Map display names to script files
 declare -A SCRIPT_MAP
 SCRIPT_MAP["Gum (CLI toolkit)"]="setup-gum.sh"
+SCRIPT_MAP["Dev Tools (uv, mise, node, bun)"]="cloud-init/setup-dev-tools.sh"
 SCRIPT_MAP["Zsh + Oh My Zsh + Powerlevel10k"]="setup-zsh.sh"
 SCRIPT_MAP["GitHub Repos (gh auth + clone)"]="setup-repos.sh"
 SCRIPT_MAP["Google Chrome"]="setup-chrome.sh"
@@ -44,6 +46,7 @@ if $UNATTENDED; then
     CHOICES="$SETUP_CHOICES"
   else
     CHOICES="Gum (CLI toolkit)
+Dev Tools (uv, mise, node, bun)
 Zsh + Oh My Zsh + Powerlevel10k
 GitHub Repos (gh auth + clone)
 Google Chrome
@@ -51,8 +54,9 @@ Remote Desktop (xRDP + XFCE)
 System Update (dist-upgrade)"
   fi
 else
-  CHOICES=$(gum choose --no-limit --height 10 --selected="Gum (CLI toolkit),Zsh + Oh My Zsh + Powerlevel10k,GitHub Repos (gh auth + clone),Google Chrome,Remote Desktop (xRDP + XFCE),System Update (dist-upgrade)" \
+  CHOICES=$(gum choose --no-limit --height 11 --selected="Gum (CLI toolkit),Dev Tools (uv, mise, node, bun),Zsh + Oh My Zsh + Powerlevel10k,GitHub Repos (gh auth + clone),Google Chrome,Remote Desktop (xRDP + XFCE),System Update (dist-upgrade)" \
     "Gum (CLI toolkit)" \
+    "Dev Tools (uv, mise, node, bun)" \
     "Zsh + Oh My Zsh + Powerlevel10k" \
     "GitHub Repos (gh auth + clone)" \
     "Google Chrome" \

@@ -2,14 +2,8 @@
 set -euo pipefail
 
 # Install zsh, oh-my-zsh, powerlevel10k, and plugins on Ubuntu
-# Run as normal user (not root)
 
 echo "=== Zsh Setup ==="
-
-if [[ $EUID -eq 0 ]]; then
-  echo "ERROR: Do not run as root. Run as your normal user."
-  exit 1
-fi
 
 # --- Source shared lib ---
 

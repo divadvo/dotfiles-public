@@ -2,14 +2,8 @@
 set -euo pipefail
 
 # Install dev tools (uv, mise, node, bun, npm packages)
-# Run as normal user (not root)
 
 echo "=== Dev Tools Setup ==="
-
-if [[ $EUID -eq 0 ]]; then
-  echo "ERROR: Do not run as root. Run as your normal user."
-  exit 1
-fi
 
 # --- uv ---
 

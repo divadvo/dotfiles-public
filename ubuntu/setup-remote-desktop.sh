@@ -2,7 +2,6 @@
 set -euo pipefail
 
 # Setup xRDP + XFCE remote desktop on Ubuntu 24.04
-# Run manually on the server as a normal user (not root)
 # Connect from macOS using Microsoft Remote Desktop
 
 echo "=== Remote Desktop Setup (xRDP + XFCE) ==="
@@ -15,11 +14,6 @@ _LIB="/tmp/.ubuntu-setup-lib.sh"
 source "$_LIB"
 
 # --- Pre-flight checks ---
-
-if [[ $EUID -eq 0 ]]; then
-  echo "ERROR: Do not run as root. Run as your normal user (sudo will be used where needed)."
-  exit 1
-fi
 
 if ! grep -q "Ubuntu" /etc/os-release 2>/dev/null; then
   echo "WARNING: This script is designed for Ubuntu. Proceeding anyway..."

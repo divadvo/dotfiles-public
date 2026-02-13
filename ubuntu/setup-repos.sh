@@ -2,14 +2,8 @@
 set -euo pipefail
 
 # Authenticate with GitHub CLI, create project directories, and clone repos
-# Run as normal user (not root)
 
 echo "=== GitHub Repos Setup ==="
-
-if [[ $EUID -eq 0 ]]; then
-  echo "ERROR: Do not run as root. Run as your normal user."
-  exit 1
-fi
 
 # --- Check gh is installed ---
 
