@@ -34,7 +34,7 @@ echo ""
 # Map display names to script files
 declare -A SCRIPT_MAP
 SCRIPT_MAP["Gum (CLI toolkit)"]="setup-gum.sh"
-SCRIPT_MAP["Dev Tools (uv, mise, node, bun)"]="cloud-init/setup-dev-tools.sh"
+SCRIPT_MAP["Dev Tools (uv + mise + node + bun)"]="cloud-init/setup-dev-tools.sh"
 SCRIPT_MAP["Zsh + Oh My Zsh + Powerlevel10k"]="setup-zsh.sh"
 SCRIPT_MAP["GitHub Repos (gh auth + clone)"]="setup-repos.sh"
 SCRIPT_MAP["Google Chrome"]="setup-chrome.sh"
@@ -46,7 +46,7 @@ if $UNATTENDED; then
     CHOICES="$SETUP_CHOICES"
   else
     CHOICES="Gum (CLI toolkit)
-Dev Tools (uv, mise, node, bun)
+Dev Tools (uv + mise + node + bun)
 Zsh + Oh My Zsh + Powerlevel10k
 GitHub Repos (gh auth + clone)
 Google Chrome
@@ -54,16 +54,9 @@ Remote Desktop (xRDP + XFCE)
 System Update (dist-upgrade)"
   fi
 else
-  CHOICES=$(gum choose --no-limit --height 11 \
-    --selected="Gum (CLI toolkit)" \
-    --selected="Dev Tools (uv, mise, node, bun)" \
-    --selected="Zsh + Oh My Zsh + Powerlevel10k" \
-    --selected="GitHub Repos (gh auth + clone)" \
-    --selected="Google Chrome" \
-    --selected="Remote Desktop (xRDP + XFCE)" \
-    --selected="System Update (dist-upgrade)" \
+  CHOICES=$(gum choose --no-limit --height 11 --selected="Gum (CLI toolkit),Dev Tools (uv + mise + node + bun),Zsh + Oh My Zsh + Powerlevel10k,GitHub Repos (gh auth + clone),Google Chrome,Remote Desktop (xRDP + XFCE),System Update (dist-upgrade)" \
     "Gum (CLI toolkit)" \
-    "Dev Tools (uv, mise, node, bun)" \
+    "Dev Tools (uv + mise + node + bun)" \
     "Zsh + Oh My Zsh + Powerlevel10k" \
     "GitHub Repos (gh auth + clone)" \
     "Google Chrome" \
