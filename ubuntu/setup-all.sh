@@ -54,7 +54,14 @@ Remote Desktop (xRDP + XFCE)
 System Update (dist-upgrade)"
   fi
 else
-  CHOICES=$(gum choose --no-limit --height 11 --selected="Gum (CLI toolkit),Dev Tools (uv, mise, node, bun),Zsh + Oh My Zsh + Powerlevel10k,GitHub Repos (gh auth + clone),Google Chrome,Remote Desktop (xRDP + XFCE),System Update (dist-upgrade)" \
+  CHOICES=$(gum choose --no-limit --height 11 \
+    --selected="Gum (CLI toolkit)" \
+    --selected="Dev Tools (uv, mise, node, bun)" \
+    --selected="Zsh + Oh My Zsh + Powerlevel10k" \
+    --selected="GitHub Repos (gh auth + clone)" \
+    --selected="Google Chrome" \
+    --selected="Remote Desktop (xRDP + XFCE)" \
+    --selected="System Update (dist-upgrade)" \
     "Gum (CLI toolkit)" \
     "Dev Tools (uv, mise, node, bun)" \
     "Zsh + Oh My Zsh + Powerlevel10k" \
